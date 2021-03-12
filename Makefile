@@ -17,7 +17,7 @@ LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib
 LDFLAGS  += -lcublas
 LDFLAGS  += -lcudart
 
-COMPUTE   ?= 50
+COMPUTE   ?= 86
 
 NVCCFLAGS ?=
 NVCCFLAGS += -I${CUDAPATH}/include
