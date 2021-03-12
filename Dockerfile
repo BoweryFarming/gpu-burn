@@ -6,7 +6,8 @@ COPY . /build/
 
 RUN make
 
-FROM nvidia/cuda:11.2.1-runtime-ubuntu20.04
+#FROM nvidia/cuda:11.2.1-runtime-ubuntu20.04
+FROM nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu20.04
 
 COPY --from=builder /build/gpu_burn /app/
 COPY --from=builder /build/compare.ptx /app/
