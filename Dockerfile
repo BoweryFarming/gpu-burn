@@ -4,7 +4,7 @@ WORKDIR /build
 
 COPY . /build/
 
-RUN make
+RUN make -f gpuburn.make
 
 FROM nvidia/cuda:11.2.1-runtime-ubuntu20.04
 

@@ -5,10 +5,10 @@ IMAGE_VERSION?=11.2.1-runtime-ubuntu20.04-gpu-burn
 IMAGE_TAG?=traptic/cuda:${IMAGE_VERSION}
 
 shell: image
-	docker run -it --rm ${IMAGE_TAG} bash
+	docker run --runtime=nvidia --rm -it ${IMAGE_TAG} bash
 
 burn: image
-	docker run --rm ${IMAGE_TAG}
+	docker run --runtime=nvidia --rm ${IMAGE_TAG}
 
 image:
 	docker build --tag ${IMAGE_TAG} .
