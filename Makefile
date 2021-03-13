@@ -1,38 +1,17 @@
-CUDAPATH ?= /usr/local/cuda
 
-NVCC     :=  ${CUDAPATH}/bin/nvcc
-CCPATH   ?=
+SHELL:=/bin/bash
 
-CFLAGS   ?=
-CFLAGS   += -O3
-CFLAGS   += -Wno-unused-result
-CFLAGS   += -I${CUDAPATH}/include
+IMAGE_VERSION?=11.2.1-runtime-ubuntu20.04-gpu-burn
+IMAGE_TAG?=traptic/cuda:${IMAGE_VERSION}
 
-LDFLAGS  ?=
-LDFLAGS  += -lcuda
-LDFLAGS  += -L${CUDAPATH}/lib64
-LDFLAGS  += -L${CUDAPATH}/lib
-LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib64
-LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib
-LDFLAGS  += -lcublas
-LDFLAGS  += -lcudart
+shell: image
+	docker run -it --rm ${IMAGE_TAG} bash
 
-COMPUTE   ?= 86
+burn: image
+	docker run --rm ${IMAGE_TAG}
 
-NVCCFLAGS ?=
-NVCCFLAGS += -I${CUDAPATH}/include
-NVCCFLAGS += -arch=compute_$(subst .,,${COMPUTE})
+image:
+	docker build --tag ${IMAGE_TAG} .
 
-.PHONY: clean
-
-gpu_burn: gpu_burn-drv.o compare.ptx
-	g++ -o $@ $< -O3 ${LDFLAGS}
-
-%.o: %.cpp
-	g++ ${CFLAGS} -c $<
-
-%.ptx: %.cu
-	$PATH=${PATH}:${CCPATH}:. ${NVCC} ${NVCCFLAGS} -ptx $< -o $@
-
-clean:
-	$(RM) *.ptx *.o gpu_burn
+uploadImage: image
+	docker push ${IMAGE_TAG}
