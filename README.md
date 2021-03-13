@@ -1,3 +1,8 @@
+# Traptic specific stuff, CUDA 11 with Ubuntu Server 20.04
+Stress the GPU(s) with:
+`make burn`
+
+# --- original README ---
 # gpu-burn
 Multi-GPU CUDA stress test
 http://wili.cc/blog/gpu-burn.html
@@ -32,7 +37,7 @@ list of nvcc flags:
 `make NVCCFLAGS=-ccbin <path to host compiler>`
 
 CUDAPATH can be added to point to a non standard install or
-specific version of the cuda toolkit (default is 
+specific version of the cuda toolkit (default is
 /usr/local/cuda):
 
 `make CUDAPATH=/usr/loca/cuda-<version>`
@@ -46,10 +51,10 @@ CCPATH can be specified to point to a specific gcc (default is
 
     GPU Burn
     Usage: gpu_burn [OPTIONS] [TIME]
-    
+
     -d	Use doubles
     -tc	Use Tensor cores
     -h	Show this help message
-    
+
     Example:
     gpu-burn -d 3600
